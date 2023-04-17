@@ -52,7 +52,6 @@ func New(opts Options) (*Server, error) {
 		},
 	}
 	index := newIndexPage()
-	levelHandler := newApplyLogLevelHandler(lg)
 
 	e.GET("/version", s.Version)
 	index.addPage("/version", "Get build information")
@@ -60,7 +59,7 @@ func New(opts Options) (*Server, error) {
 	index.addPage("/debug/pprof/profile?seconds=30", "Take half-min profile")
 
 	e.GET("/", index.handler)
-	e.PUT("/log/level", levelHandler.handler)
+	e.PUT("/log/level", s.handlerLogLevel)
 
 	return s, nil
 }

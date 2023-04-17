@@ -9,19 +9,9 @@ import (
 	"github.com/razielsd/chat-service/internal/logger"
 )
 
-type applyLogLevelHandler struct {
-	lg *zap.Logger
-}
-
-func newApplyLogLevelHandler(lg *zap.Logger) *applyLogLevelHandler {
-	return &applyLogLevelHandler{
-		lg: lg,
-	}
-}
-
-func (l *applyLogLevelHandler) handler(eCtx echo.Context) error {
+func (s *Server) handlerLogLevel(eCtx echo.Context) error {
 	level := eCtx.FormValue("level")
-	l.lg.Info("change log level", zap.String("level", level))
+	s.lg.Info("change log level", zap.String("level", level))
 	err := logger.LogLevel.UnmarshalText([]byte(level))
 	if err != nil {
 		return err

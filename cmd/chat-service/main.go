@@ -41,7 +41,7 @@ func run() (errReturned error) {
 	if err != nil {
 		return fmt.Errorf("logger init: %v", err)
 	}
-	logger.Sync()
+	defer logger.Sync()
 
 	srvDebug, err := serverdebug.New(
 		serverdebug.NewOptions(cfg.Servers.Debug.Addr),

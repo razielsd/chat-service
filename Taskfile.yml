@@ -10,7 +10,7 @@ vars:
 
   GOLANGCI_LINT_VERSION: v1.52.2
   GOLANGCI_LINT_CACHE:
-    sh: echo "{{.HOME}}/Library/Caches" # FIXME
+    sh: echo "{{.HOME}}/Library/Caches"
 
   DEV_TOOLS: |
     github.com/daixiang0/gci@v0.8.0
@@ -37,7 +37,7 @@ tasks:
 
   fmt:
     - echo "- Format"
-    - gofumpt -w internal cmd
+    - gofumpt -w {{.GO_FILES}}
 
   lint:
     cmds:
@@ -68,4 +68,8 @@ tasks:
   dev-tools:install:
     cmds:
       - echo "- Install dev tools"
-      - go install {{.DEV_TOOLS}}
+      - |
+        {{range $i, $line := .DEV_TOOLS | trim | splitLines -}}
+          echo "Install {{$line}}"
+          go install {{$line}}
+        {{end}}
