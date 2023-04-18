@@ -38,6 +38,7 @@ tasks:
   fmt:
     - echo "- Format"
     - gofumpt -w {{.GO_FILES}}
+    - gci write -s standard -s default -s "prefix(github.com/razielsd/chat-service)" {{.GO_FILES}}
 
   lint:
     cmds:
